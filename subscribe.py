@@ -4,7 +4,7 @@ import paho.mqtt.client as client
 
 def on_connect(mqttc, userdata, rc):
 	print("Connected with the result code " +str(rc))
-	mqttc.subscribe("/SanAntonioTemp",qos=2)
+	mqttc.subscribe("/SanAntonioTemp",qos=1)
 
 def on_message(mqttc, userdata, msg):
 	try:

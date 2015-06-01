@@ -35,12 +35,14 @@ def main():
 		thime = parseTime(rep)
 		if thime != lasttime:
 			publish.single("/SanAntonioTemp", payload=("At "+str(thime)+" the temp was "+str(temp)),qos=2,hostname="10.0.0.3")
+			publish.single("/SanAntonioTemp", payload=("At "+str(thime)+" the temp was "+str(temp)),qos=2,hostname="10.3.12.48", port=1883)
 			lasttime = thime
 			count = 0
 			print "At "+str(thime)+ " the temp was "+str(temp)+ " has been published"  
 		else:
 			count = count + 15
 			publish.single("/SanAntonioTemp", payload=("Time last updated was "+str(count/60)+ " minutes ago and the temperature was "+str(temp)),qos=2,hostname="10.0.0.3")
+			publish.single("/SanAntonioTemp", payload=("Time last updated was "+str(count/60)+ " minutes ago and the temperature was "+str(temp)),qos=2,hostname="10.3.12.48", port=1883)
 			print "Published new count " +str(count/60)
 		
 		time.sleep(15)
