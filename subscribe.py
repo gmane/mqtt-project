@@ -27,7 +27,7 @@ def main():
 	mqttc.on_disconnect = on_disconnect
 
 	#mqttc.loop_start()
-	mqttc.connect("10.0.0.3", 1883, 60)
+	mqttc.connect("192.168.2.63", 1883, 60)
 	mqttc.loop_start()
 	while True:
 		try: 
