@@ -2,7 +2,8 @@
 
 import urllib2
 import json
-import paho.mqtt.publish as publish
+#import paho.mqtt.publish as publish
+import paho.mqtt.client as client
 import time 
 
 #System Variables
@@ -27,6 +28,9 @@ def parseTime(parsed_json):
 	return time
 
 def main():
+	mqttc = mqtt.Client(protocol=mqtt.MQTTv31)
+	mqttc.connect("10.3.12.48", 1883, 60)
+	mqttc.loop_start()
 	lasttime = []
 	while 0 < 1:
 		rep = loadStation(url)
@@ -34,15 +38,17 @@ def main():
 			temp = parseTemp(rep)
 			thime = parseTime(rep)
 			if thime != lasttime:
-				publish.single("/SanAntonioTemp/Wunder", payload=("At "+str(thime)+" the temp was "+str(temp)),qos=2,hostname="10.0.0.3")
-				publish.single("/SanAntonioTemp/Wunder", payload=("At "+str(thime)+" the temp was "+str(temp)),qos=2,hostname="10.3.12.48", port=1883)
+				#publish.single("/SanAntonioTemp/Wunder", payload=("At "+str(thime)+" the temp was "+str(temp)),qos=2,hostname="10.0.0.3")
+				#publish.single("/SanAntonioTemp/Wunder", payload=("At "+str(thime)+" the temp was "+str(temp)),qos=2,hostname="10.3.12.48", port=1883)
+				mqttc.publish("/SanAntonioTemp/Wunder", (str(thime)+ ' the temperature was ' + str(temp)), qos=2)
 				lasttime = thime
 				count = 0
 				print "At "+str(thime)+ " the temp was "+str(temp)+ " has been published"  
 			else:
 				count = count + 15
-				publish.single("/SanAntonioTemp/Wunder", payload=("Time last updated was "+str(count/60)+ " minutes ago and the temperature was "+str(temp)),qos=2,hostname="10.0.0.3")
-				publish.single("/SanAntonioTemp/Wunder", payload=("Time last updated was "+str(count/60)+ " minutes ago and the temperature was "+str(temp)),qos=2,hostname="10.3.12.48", port=1883)
+				#publish.single("/SanAntonioTemp/Wunder", payload=("Time last updated was "+str(count/60)+ " minutes ago and the temperature was "+str(temp)),qos=2,hostname="10.0.0.3")
+				#publish.single("/SanAntonioTemp/Wunder", payload=("Time last updated was "+str(count/60)+ " minutes ago and the temperature was "+str(temp)),qos=2,hostname="10.3.12.48", port=1883)
+				mqttc.publish("/SanAntonioTemp/Wunder", ('Last updated '+str(count/60)+" minutes ago and the temperature was "+str(temp)), qos=2)
 				print "Published new count " +str(count/60)
 		except:
 			print 'Could not parse data. Will retry in 15 seconds.'
