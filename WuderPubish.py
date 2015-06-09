@@ -3,7 +3,7 @@
 import urllib2
 import json
 #import paho.mqtt.publish as publish
-import paho.mqtt.client as client
+import paho.mqtt.client as mqtt
 import time 
 
 #System Variables
