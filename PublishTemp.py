@@ -40,7 +40,7 @@ def main():
 		if thime != lasttime:
 			#publish.single("/SanAntonioTemp", payload=("At "+str(thime)+" the temp was "+str(temp)),qos=2,hostname="10.0.0.3")
 			#publish.single("/SanAntonioTemp", payload=("At "+str(thime)+" the temp was "+str(temp)),qos=2,hostname="10.3.12.48", port=1883)
-			mqttc.publish("/SanAntonioTemp", payload=("At "+str(thime)+" the temp was "+str(temp)),qos=2,hostname="10.3.12.48", port=1883)
+			mqttc.publish("/SanAntonioTemp", payload=("At "+str(thime)+" the temp was "+str(temp)),qos=2)
 			lasttime = thime
 			count = 0
 			print "At "+str(thime)+ " the temp was "+str(temp)+ " has been published"  
@@ -48,6 +48,7 @@ def main():
 			count = count + 15
 			#publish.single("/SanAntonioTemp", payload=("Time last updated was "+str(count/60)+ " minutes ago and the temperature was "+str(temp)),qos=2,hostname="10.0.0.3")
 			#publish.single("/SanAntonioTemp", payload=("Time last updated was "+str(count/60)+ " minutes ago and the temperature was "+str(temp)),qos=2,hostname="10.3.12.48", port=1883)
+			mqttc.publish("/SanAntonioTemp", payload=("Time last updated was "+str(count/60)+ " minutes ago and the temperature was "+str(temp)),qos=2)
 			print "Published new count " +str(count/60)
 		
 		time.sleep(15)
