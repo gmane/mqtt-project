@@ -15,9 +15,10 @@ url = 'http://api.wunderground.com/api/3a26c3d47e04ad9c/geolookup/conditions/q/T
 def loadStation(url):
 	f = urllib2.urlopen(url)
 	json_string =f.read()
-	parsed_json=json.loads(json_string)
+	#parsed_json=json.loads(json_string)
 	f.close()
-	return parsed_json
+	#return parsed_json
+	return json_string
 
 def parseTemp(parsed_json):
 	temp = parsed_json['current_observation']['temp_f']
@@ -36,12 +37,12 @@ def main():
 	while 0 < 1:
 		if (count == 0):
 			rep = loadStation(url)
-			temp = parseTemp(rep)
-			thime = parseTime(rep)
+			#temp = parseTemp(rep)
+			#thime = parseTime(rep)
 			try:
 				mqttc.publish("/WundergroundSA", rep, qos=2)
 				mqttc.publish("/WundergroundSA/count", "0", qos=2)
-				count = -1;
+				count = 0;
 				print 'Updated Weather Data'
 			except:
 				print 'Could not parse data. Will retry in 1 second.'
