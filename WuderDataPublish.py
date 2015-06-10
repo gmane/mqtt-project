@@ -44,7 +44,7 @@ def main():
 				mqttc.publish("/WundergroundSA", rep, qos=2)
 				mqttc.publish("/WundergroundSA/count", "0", qos=2)
 				now = datetime.today()
-				mqttc.publish("/WundergroundSA/MQTTUpdateTime", now, qos=2)
+				mqttc.publish("/WundergroundSA/MQTTUpdateTime", str(now), qos=2)
 				count = 0;
 				print 'Updated Weather Data'
 			except:
@@ -54,7 +54,7 @@ def main():
 			try:
 				mqttc.publish("/WundergroundSA", rep, qos=2)
 				mqttc.publish("/WundergroundSA/count", str(count), qos=2)
-				mqttc.publish("/WundergroundSA/MQTTUpdateTime", now, qos=2)
+				mqttc.publish("/WundergroundSA/MQTTUpdateTime", str(now), qos=2)
 				print 'Republished Old Data. The count is '+ str(count)+' seconds.'
 			except:
 				print 'Could not publish old data. Will attempt to get new data in 1 second.'
