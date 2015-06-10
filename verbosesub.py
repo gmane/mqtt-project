@@ -4,7 +4,7 @@ import paho.mqtt.client as client
 
 def on_connect(mqttc, userdata, rc):
 	print("Connected with the result code " +str(rc))
-	mqttc.subscribe("/SanAntonioTemp",qos=1)
+	mqttc.subscribe("/SanAntonioTemp/Wunder",qos=2)
 
 def on_message(mqttc, userdata, msg):
 	try:
@@ -27,7 +27,7 @@ def main():
 	mqttc.on_disconnect = on_disconnect
 
 	#mqttc.loop_start()
-	mqttc.connect("10.0.0.3", 1883, 60)
+	mqttc.connect("10.3.12.48", 1883, 60)
 	mqttc.loop_start()
 	while True:
 		try: 
