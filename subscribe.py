@@ -4,11 +4,13 @@ import paho.mqtt.client as client
 
 def on_connect(mqttc, userdata, rc):
 	print("Connected with the result code " +str(rc))
-	mqttc.subscribe("/#",qos=1)
+	mqttc.subscribe("/SanAntonioTemp",qos=1)
 
 def on_message(mqttc, userdata, msg):
 	try:
-		 print(msg.topic+ " "+ str(msg.payload))
+		print(msg.topic+ " "+ str(msg.payload))
+		mqttc.temp = msg.payload
+		print float(mqttc.temp) + 2
 	except:
 		print "Packet Read Error"
 def on_log(mqttc, obj, level, string):
