@@ -37,11 +37,11 @@ def main():
 	count = 0
 	while 0 < 1:
 		if (count == 0):
-			rep = loadStation(url)
+			rep = ''.join([i if ord(i) < 128 else ' ' for i in loadStation(url)])
 			#temp = parseTemp(rep)
 			#thime = parseTime(rep)
 			try:
-				mqttc.publish("/WundergroundSA", rep, qos=2)
+				mqttc.publish("/WundergroundSA", str(rep), qos=2)
 				mqttc.publish("/WundergroundSA/count", "0", qos=2)
 				now = datetime.today()
 				mqttc.publish("/WundergroundSA/MQTTUpdateTime", str(now), qos=2)
@@ -52,7 +52,7 @@ def main():
 				count = -1;
 		else:
 			try:
-				mqttc.publish("/WundergroundSA", rep, qos=2)
+				mqttc.publish("/WundergroundSA", str(rep), qos=2)
 				mqttc.publish("/WundergroundSA/count", str(count), qos=2)
 				mqttc.publish("/WundergroundSA/MQTTUpdateTime", str(now), qos=2)
 				print 'Republished Old Data. The count is '+ str(count)+' seconds.'
