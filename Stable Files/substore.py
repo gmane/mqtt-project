@@ -5,10 +5,10 @@ import json
 import MySQLdb as db
 
 def SQL_Connect():
-	USER = 'root'
+	USER = 'bestlab'
 	PASS = 'bestlab'
 	HOST = 'localhost'
-	DATABASE = 'Wunderground Weather'
+	DATABASE = 'localstore'
 	conn = db.connect(host = HOST, user = USER, passwd = PASS, db = DATABASE)
 	return conn
 
@@ -22,7 +22,7 @@ def on_connect(mqttc, userdata, rc):
 	
 def on_message(mqttc, userdata, msg):
 	#This is the callback of what happens when a message arrives to the subscriber
-	add_data = ("INSERT INTO Pymetar_Data (idPymetar_Data, Temp) VALUES (%s, %s)")
+	add_data = ("INSERT INTO incoming_data (time, temp, e_load) VALUES (%s, %s, %s)")
 	try:
 		#The message is printed if it can be parsed, then stored into the MQTT client
 		#print(msg.topic+ " "+ str(msg.payload))
